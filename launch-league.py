@@ -14,5 +14,5 @@ if os.path.isdir(f"{XDG_DATA_HOME}/leagueoflegends") and os.path.isfile(f"{XDG_D
 else:
     # Step 3: Launch leagueinstaller.py from current directory
     print("League of legends install not detected, installing the game...")
-    os.chmod("./leagueinstaller.py", 0o777)
-    os.system("./leagueinstaller.py")
+    os.chmod("python ./leagueinstaller.py", 0o777)
+    os.system("python ./leagueinstaller.py")
