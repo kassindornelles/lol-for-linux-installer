@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 
-# XDG stuff
-[ ! -d "${XDG_DATA_HOME}" ] && XDG_DATA_HOME=~/.local/share
+# Variables
+[ ! -d "${XDG_DATA_HOME}" ] && XDG_DATA_HOME=~/.local/share     # Setup XDG stuff
+leagueoflegends_dir="${XDG_DATA_HOME}/leagueoflegends"    # League of legends path
+downloads_dir="$leagueoflegends_dir/Downloads"    # Download path
+league_installer_url="https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.na.exe"   # league client installer URL
+wine_lutris_ge_lol_url="https://github.com/GloriousEggroll/wine-ge-custom/releases/download/7.0-GE-5-LoL/wine-lutris-ge-lol-7.0-5-x86_64.tar.xz"  # Wine build URL
+wine_dir="$leagueoflegends_dir/wine"  # Wine main directory
+league_installer_file="$downloads_dir/live.na.exe"  # Original LoL client name
+league_installer_name="leagueinstaller.exe"  # LoL client name we will use
+wine_lol_lutris_dir="$wine_dir/wine-lol-lutris"   # Wine build path name
+leaguefirstboot="Firstboot.sh"    # First boot script name
+leaguelauncherfile="Launch.sh"    # League of Legends launcher script name
 
 # Function for logging messages to file
 function log_message() {
@@ -18,7 +28,7 @@ if [ $? -eq 0 ]; then
   dbusRef=`kdialog --title "Installing LoL" --progressbar "Initializing" 15`
   qdbus $dbusRef showCancelButton false
 
-leagueoflegends_dir="${XDG_DATA_HOME}/leagueoflegends"
+
 if [ ! -d "$leagueoflegends_dir" ]; then
   mkdir "$leagueoflegends_dir"
   log_message "Created directory $leagueoflegends_dir"
@@ -26,7 +36,6 @@ fi
 
 # Create Downloads directory in leagueoflegends directory
 
-downloads_dir="$leagueoflegends_dir/Downloads"
 if [ -d "$downloads_dir" ]; then
   rm -rf "$downloads_dir"
   log_message "Removed directory $downloads_dir"
@@ -41,12 +50,11 @@ sleep 1
 # Download League installer file and the wine translation layer for League
 
 qdbus $dbusRef setLabelText "Downloading wine-lol-lutris and the League of Legends installer"
-league_installer_url="https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.na.exe"
-wine_lutris_ge_lol_url="https://github.com/GloriousEggroll/wine-ge-custom/releases/download/7.0-GE-5-LoL/wine-lutris-ge-lol-7.0-5-x86_64.tar.xz"
-
 log_message "Downloading wine-lol-lutris and the League of Legends installer"
+
 wget -P "$downloads_dir" "$league_installer_url"
 wget -P "$downloads_dir" "$wine_lutris_ge_lol_url"
+
 log_message "Finished downloading files"
 qdbus $dbusRef Set "" value 2
 qdbus $dbusRef setLabelText "wine-lol-lutris and League of Legends installer downloaded"
@@ -56,7 +64,7 @@ sleep 1
 
 qdbus $dbusRef setLabelText "Extracting wine-lutris-lol package, please wait"
 
-wine_dir="$leagueoflegends_dir/wine"
+
 if [ -d "$wine_dir" ]; then
   rm -rf "$wine_dir"
   log_message "Removed directory $wine_dir"
@@ -71,20 +79,19 @@ qdbus $dbusRef setLabelText "Extracted wine-lutris-lol"
 
 # Rename League installer file to leagueinstaller.exe
 qdbus $dbusRef setLabelText "Renaming installer file"
-league_installer_file="$downloads_dir/live.na.exe"
-league_installer_name="leagueinstaller.exe"
+
 mv "$league_installer_file" "$downloads_dir/$league_installer_name"
 log_message "Renamed $league_installer_file to $league_installer_name"
 
 # Rename wine directory subfolder to wine-lol-lutris
 for subfolder in "$wine_dir"/*; do
   if [[ $subfolder == *"lutris-ge-lol-"* ]]; then
-    wine_lol_lutris_dir="$wine_dir/wine-lol-lutris"
     mv "$subfolder" "$wine_lol_lutris_dir"
     log_message "Renamed $subfolder to $wine_lol_lutris_dir"
     break
   fi
 done
+
 qdbus $dbusRef Set "" value 4
 qdbus $dbusRef setLabelText "Renamed lutris-lol folder"
 sleep 1
@@ -107,9 +114,7 @@ log_message "Creating first-boot script"
 qdbus $dbusRef setLabelText "Creating first-boot script"
 
 cd "$leagueoflegends_dir"
-leaguefirstboot="Firstboot.sh"
 touch $leaguefirstboot
-
 echo '#!/usr/bin/env bash
 
 # XDG stuff
@@ -149,7 +154,6 @@ qdbus $dbusRef setLabelText "Creating Launch.sh script"
 log_message "Creating Launch.sh script"
 
 cd $leagueoflegends_dir
-leaguelauncherfile="Launch.sh"
 touch $leaguelauncherfile
 
 echo '##!/usr/bin/env bash
@@ -212,7 +216,7 @@ for size in 16 32 48 64 128 256; do
     fi
 done
 
-rm "$leagueoflegends_dir/league"*.png
+rm "$leagueoflegends_dir/league"*.png  # Delete downloaded icons since they all got installed
 
 log_message "System icons installed"
 qdbus $dbusRef Set "" value 10
