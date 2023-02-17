@@ -9,10 +9,10 @@ if os.path.isdir(f"{XDG_DATA_HOME}/leagueoflegends") and os.path.isfile(f"{XDG_D
     # Step 2: Start the Launch.sh script
     print("League of legends was detected, running the game...")
     os.chdir(f"{XDG_DATA_HOME}/leagueoflegends")
-    os.chmod("./Launch.sh", 0o755)
+    os.chmod("./Launch.sh", 0o777)
     os.system("./Launch.sh")
 else:
-    # Step 3: Launch leagueinstaller.sh from current directory
+    # Step 3: Launch leagueinstaller.py from current directory
     print("League of legends install not detected, installing the game...")
-    os.chmod("./leagueinstaller.sh", 0o755)
-    os.system("./leagueinstaller.sh")
+    os.chmod("./leagueinstaller.py", 0o777)
+    os.system("./leagueinstaller.py")
