@@ -9,6 +9,7 @@ A bash (.sh) script that installs league of legends automagically!
 Might be necessary to run chmod +x ./leagueinstaller.sh
 
 ## Dependencies:
+- xdg-user-dirs
 - wget
 - tar
 - kdialog 
