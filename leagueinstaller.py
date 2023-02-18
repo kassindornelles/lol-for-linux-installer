@@ -46,19 +46,16 @@ print("All files Downloaded") # Cheap logging
 
 # Extract tar file
 print("Extracting the wine-lutris-lol build file") # Cheap logging
-file = tarfile.open(os.path.join(game_downloads_dir, tar_file_name))
+file = tarfile.open(os.path.join(game_downloads_dir, tar_file_name)) as file
 file.extractall(os.path.join(game_main_wine_dir))
-file.close()
 print("Extraction on the wine-lutris-lol build file completed") # Cheap logging
 
 # Start the first-boot script to setup DXVK and the prefix
-
-# Set the environment variables you want to apply
 first_boot_envs = {
         "PATH": f"{game_main_wine_dir}/lutris-ge-lol-7.0-5-x86_64/bin:{os.environ['PATH']}",
         "WINEARCH": "win64",
         "WINEPREFIX": game_prefix_dir,
-        "WINELOADER": f"{game_main_wine_dir}/lutris-ge-lol-7.0-5-x86_64/bin",
+        "WINELOADER": f"{game_main_wine_dir}/lutris-ge-lol-7.0-5-x86_64/bin/wine",
         "WINEFSYNC": "1",
         "WINEDEBUG": "-all",
         "WINEDLLOVERRIDES": "winemenubuilder.exe=d",
@@ -66,12 +63,12 @@ first_boot_envs = {
         "XDG_CACHE_HOME": f"{os.environ['HOME']}/.cache",
     }
 
-# Start the software and pass the environment variables
+# Start firs-boot and setup DXVK
 subprocess.run(["wineboot", "-u"], env=first_boot_envs, check=True)
 subprocess.run(["winetricks", "dxvk"], env=first_boot_envs, check=True)
 
 # TODO
-# fix winetricks not properly writing to the cache folder
+# Start the league installer
 # create a launch script for the .desktop file
 # make a .desktop file
 # create icons for the desktop file
