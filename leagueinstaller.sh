@@ -183,7 +183,7 @@ log_message "Creating Launch.sh script"
 cd $leagueoflegends_dir
 touch $leaguelauncherfile
 
-echo '##!/usr/bin/env bash
+echo '#!/usr/bin/env bash
 # XDG stuff
 [ ! -d "${XDG_DATA_HOME}" ] && XDG_DATA_HOME=~/.local/share
 LEAGUEPATH="${XDG_DATA_HOME}/leagueoflegends/wine/prefix/drive_c/Riot Games/Riot Client"
