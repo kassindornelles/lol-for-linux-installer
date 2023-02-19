@@ -7,10 +7,7 @@
 import os
 import sys
 import subprocess
-import time
-import gi
 import dbus
-import enum
 import wget
 import tarfile
 import lzma
