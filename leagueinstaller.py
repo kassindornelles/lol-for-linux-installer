@@ -125,7 +125,7 @@ with open(desktop_file_path, "w") as file:
     file.write("[Desktop Entry]\n")
     file.write("Name=League of Legends (Python Launcher)\n")
     file.write("Comment=Play League of Legends on Linux\n")
-    file.write(f"Exec={game_script_to_launch}\n")
+    file.write(f"Exec={game_launch_file_path}\n")
     file.write("Terminal=false\n")
     file.write("Icon=leagueoflol.png\n")
     file.write("Type=Application\n")
