@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-# WARNING
-# DO NOT USE THIS SCRIPT YET
-# IS BROKEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 import os
 import sys
 import subprocess
@@ -134,7 +130,6 @@ with open(desktop_file_path, "w") as file:
 
 os.chmod(desktop_file_path, 0o755)
 
-# TODO:
 # create icons for the desktop file
 for size in sizes:
     url = github_icons_url.format(size)
@@ -150,4 +145,5 @@ for size in sizes:
         os.makedirs(dest_folder)
     shutil.move(os.path.join(github_icons_download_path, filename), dest_path)
 
+# TODO:
 # messages/window UI (kdialog again?)
