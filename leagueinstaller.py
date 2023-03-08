@@ -75,7 +75,6 @@ first_boot_envs = { **os.environ,
         "WINETRICKS_CACHE": f"{game_winetricks_cache_dir}",
     }
 
-subprocess.run(["wineboot", "-u"], env=first_boot_envs, check=True)
 subprocess.run(["winetricks", "dxvk"], env=first_boot_envs, check=True)
 wine_process = ["wine", league_installer_file]
 subprocess.run(wine_process, env=first_boot_envs, check=True)
