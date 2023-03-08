@@ -145,5 +145,8 @@ for size in sizes:
         os.makedirs(dest_folder)
     shutil.move(os.path.join(github_icons_download_path, filename), dest_path)
 
+
+sys.exit()
+
 # TODO:
 # messages/window UI (kdialog again?)

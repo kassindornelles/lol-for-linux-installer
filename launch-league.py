@@ -16,5 +16,5 @@ if os.path.isdir(f"{game_main_dir}") and os.path.isfile(f"{game_main_dir}/launch
 else:
     # Step 3: Launch leagueinstaller.py from current directory
     print("League of legends install not detected, installing the game...")
-    os.chmod("leagueinstaller.py", 0o777)
-    os.system("python leagueinstaller.py")
+    os.chmod("ui_installer.py", 0o777)
+    os.system("python ui_installer.py")
