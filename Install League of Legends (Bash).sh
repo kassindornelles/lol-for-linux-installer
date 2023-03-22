@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ "$(id -u)" -eq 0 ]; then
+  echo "Don't run this script as sudo user"
+  exit 1
+fi
+
 # kdialog select folder to install the game
 leagueoflegends_dir=$(kdialog --getexistingdirectory "$HOME" )
 
