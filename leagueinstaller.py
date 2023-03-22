@@ -166,7 +166,3 @@ def league_install_code(game_main_dir):
     shutil.copy("uninstall.py", os.path.join(game_main_dir, "uninstall.py"))
     os.chmod(os.path.join(game_main_dir), "uninstall.py", 0o777)
     print("Created uninstall.py file in game dir")
-
-if __name__ == '__main__':
-    t = threading.Thread(target=run_installation, args=(game_main_dir,))
-    t.start()
