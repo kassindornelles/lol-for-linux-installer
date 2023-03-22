@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-import os, json, shutil
+import os, sys, json, shutil
 
 if __name__ == '__main__':
+    if os.getuid() == 0:
+        print("Don't run this as sudo user")
+        sys.exit(1)
+
     # Define the path to the directory where the JSON file is located
     home_dir = os.path.expanduser("~")
     user_local_share = os.path.join(home_dir, ".local/share")
