@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-import sys, os, signal, psutil, shutil, requests
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QWidget, QMessageBox
+import sys, os, signal, psutil
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import QThread, pyqtSignal, QObject, Qt
+from PyQt5.QtCore import QThread, QObject
 import leagueinstaller
 
 

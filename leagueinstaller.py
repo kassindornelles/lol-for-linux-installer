@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-import os, sys, shutil, requests, tarfile, lzma, subprocess, signal, json, threading
-from PyQt5.QtCore import pyqtSignal
+import os, shutil, requests, tarfile, subprocess, json
 
 
 def league_install_code(game_main_dir):
