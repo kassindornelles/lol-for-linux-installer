@@ -2,7 +2,7 @@
 import os, shutil, requests, tarfile, subprocess, json
 
 
-def league_install_code(game_main_dir, game_region_link):
+def league_install_code(game_main_dir, game_region_link, shortcut_bool):
 
     # Expose variables
     print("Setting all variables")  # Cheap logging
@@ -97,47 +97,53 @@ def league_install_code(game_main_dir, game_region_link):
         file.write('subprocess.run(wine_process, env=start_game_vars, check=True)\n')
 
     # Create .desktop file
-    if os.path.exists(desktop_file_path):
-        os.remove(desktop_file_path)
+    if shortcut_bool:
+        try:
+            if os.path.exists(desktop_file_path):
+                os.remove(desktop_file_path)
 
-    with open(desktop_file_path, "w") as file:
-        # Write file contents
-        file.write("[Desktop Entry]\n")
-        file.write("Name=League of Legends (Python Launcher)\n")
-        file.write("Comment=Play League of Legends on Linux\n")
-        file.write(f'Exec=python3 "{game_launch_file_path}"\n')
-        file.write("Terminal=false\n")
-        file.write("Icon=leagueoflol\n")
-        file.write("Type=Application\n")
-        file.write("Categories=Game;\n")
+            with open(desktop_file_path, "w") as file:
+                # Write file contents
+                file.write("[Desktop Entry]\n")
+                file.write("Name=League of Legends (Python Launcher)\n")
+                file.write("Comment=Play League of Legends on Linux\n")
+                file.write(f'Exec=python3 "{game_launch_file_path}"\n')
+                file.write("Terminal=false\n")
+                file.write("Icon=leagueoflol\n")
+                file.write("Type=Application\n")
+                file.write("Categories=Game;\n")
 
-    os.chmod(desktop_file_path, 0o755)
+            os.chmod(desktop_file_path, 0o755)
 
-    # create icons for the desktop file
-    github_icons_url = "https://github.com/kassindornelles/lol-for-linux-bash-installer/raw/main/icons/league{}.png"
-    sizes = ["16", "32", "48", "64", "128", "256"]
-    github_icons_download_path = os.path.join(game_downloads_dir, "league-icons")
+            # create icons for the desktop file
+            github_icons_url = "https://github.com/kassindornelles/lol-for-linux-bash-installer/raw/main/icons/league{}.png"
+            sizes = ["16", "32", "48", "64", "128", "256"]
+            github_icons_download_path = os.path.join(game_downloads_dir, "league-icons")
 
-    if not os.path.exists(github_icons_download_path):
-        os.makedirs(github_icons_download_path)
+            if not os.path.exists(github_icons_download_path):
+                os.makedirs(github_icons_download_path)
 
-    for size in sizes:
-        url = github_icons_url.format(size)
-        filename = "league{}.png".format(size)
-        dest_folder = os.path.join(user_hicolor_folder, size + "x" + size, "apps")
-        dest_path = os.path.join(dest_folder, "leagueoflol.png")
+            for size in sizes:
+                url = github_icons_url.format(size)
+                filename = "league{}.png".format(size)
+                dest_folder = os.path.join(user_hicolor_folder, size + "x" + size, "apps")
+                dest_path = os.path.join(dest_folder, "leagueoflol.png")
 
-        # Download the file
-        response = requests.get(url)
-        with open(os.path.join(github_icons_download_path, filename), "wb") as f:
-            f.write(response.content)
+                # Download the file
+                response = requests.get(url)
+                with open(os.path.join(github_icons_download_path, filename), "wb") as f:
+                    f.write(response.content)
 
-        # Move the file to the correct subfolder
-        if not os.path.exists(dest_folder):
-            os.makedirs(dest_folder)
-        shutil.move(os.path.join(github_icons_download_path, filename), dest_path)
+                # Move the file to the correct subfolder
+                if not os.path.exists(dest_folder):
+                    os.makedirs(dest_folder)
+                shutil.move(os.path.join(github_icons_download_path, filename), dest_path)
 
-    print("Icons created")
+            print("Icons created")
+        except:
+            print("Couldn't create desktop files/download icons")
+    else:
+        print("Skipping desktop icons")
 
     # create json file
     # Create a dictionary to hold the data

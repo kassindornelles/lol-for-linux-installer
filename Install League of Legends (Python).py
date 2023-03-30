@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sys, os, signal, psutil
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QComboBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QComboBox, QCheckBox
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QThread, QObject, QUrl
 from PyQt5.QtGui import QDesktopServices
@@ -85,7 +85,7 @@ class Installer(QMainWindow):
             game_region_link = game_link.format(region)
 
             self.thread = QThread()
-            self.worker = Worker(self.game_main_dir, game_region_link)
+            self.worker = Worker(self.game_main_dir, game_region_link, self.checkShortcut.isChecked())
             self.worker.moveToThread(self.thread)
             self.thread.started.connect(self.worker.run)
             self.thread.finished.connect(self.finish_installation)
@@ -101,13 +101,14 @@ class Installer(QMainWindow):
 
 
 class Worker(QObject):
-    def __init__(self, game_main_dir, game_region_link):
+    def __init__(self, game_main_dir, game_region_link, create_shortcut):
         super().__init__()
         self.game_main_dir = game_main_dir
         self.game_region_link = game_region_link
+        self.create_shortcut = create_shortcut
 
     def run(self):
-        leagueinstaller.league_install_code(self.game_main_dir, self.game_region_link)
+        leagueinstaller.league_install_code(self.game_main_dir, self.game_region_link, self.create_shortcut)
         QApplication.quit()
 
 
