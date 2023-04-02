@@ -10,15 +10,14 @@ from python_src.src import leagueinstaller
 class Installer(QMainWindow):
     def __init__(self):
         super(Installer, self).__init__()
-        loadUi("python_src/ui/installer.ui", self)  # load the UI from the .ui file
+        loadUi("python_src/ui/installer.ui", self)
         self.setFixedSize(self.size())
         self.setWindowTitle('League of Legends Installer')
         self.install_button.clicked.connect(self.installer_code)
         self.cancelButton.clicked.connect(self.cancel_installation)
         self.install_button.setEnabled(True)
         self.githubButton.clicked.connect(self.open_github)
-        self.cancelButton.hide()
-
+        self.cancelButton.setEnabled(False)
 
     def open_github(self):
         url = "https://github.com/kassindornelles/lol-for-linux-installer/issues"
@@ -58,11 +57,12 @@ class Installer(QMainWindow):
         if self.game_main_dir:
             self.cancelButton.show()
             self.cancelButton.setEnabled(True)
-            self.checkShortcut.hide()
+            self.checkShortcut.setEnabled(False)
             self.welcomelabel.setText("We are installing the game for you...")
-            self.install_button.hide()  # hide the button
-            self.languageComboBox.hide()
-            self.regionLabel.hide()
+            self.install_button.setEnabled(False)
+            self.languageComboBox.setEnabled(False)
+            self.regionLabel.setEnabled(False)
+            self.checkPrime.setEnabled(False)
 
             # Get the game download link and apply region based on text from .ui file
             region_map = {
@@ -86,7 +86,7 @@ class Installer(QMainWindow):
             game_region_link = game_link.format(region)
 
             self.thread = QThread()
-            self.worker = Worker(self.game_main_dir, game_region_link, self.checkShortcut.isChecked())
+            self.worker = Worker(self.game_main_dir, game_region_link, self.checkShortcut.isChecked(), self.checkPrime.isChecked())
             self.worker.moveToThread(self.thread)
             self.thread.started.connect(self.worker.run)
             self.thread.finished.connect(self.finish_installation)
@@ -102,14 +102,15 @@ class Installer(QMainWindow):
 
 
 class Worker(QObject):
-    def __init__(self, game_main_dir, game_region_link, create_shortcut):
+    def __init__(self, game_main_dir, game_region_link, create_shortcut, enable_prime):
         super().__init__()
         self.game_main_dir = game_main_dir
         self.game_region_link = game_region_link
         self.create_shortcut = create_shortcut
+        self.enable_prime = enable_prime
 
     def run(self):
-        leagueinstaller.league_install_code(self.game_main_dir, self.game_region_link, self.create_shortcut)
+        leagueinstaller.league_install_code(self.game_main_dir, self.game_region_link, self.create_shortcut, self.enable_prime)
         QApplication.quit()
 
 

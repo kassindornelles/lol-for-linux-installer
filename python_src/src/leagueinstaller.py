@@ -2,7 +2,7 @@
 import os, shutil, requests, tarfile, subprocess, json
 
 
-def league_install_code(game_main_dir, game_region_link, shortcut_bool):
+def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bool):
 
     # Expose variables
     print("Setting all variables")  # Cheap logging
@@ -73,6 +73,16 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool):
     wine_process = ["wine", league_installer_file]
     subprocess.run(wine_process, env=first_boot_envs, check=True)
 
+    # check prime
+    if prime_bool:
+        try:
+            prime_value = "1"
+        except:
+            print("Couldn't set PRIME")
+    else:
+        prime_value = "0"
+
+
     # create py script
     with open(game_launch_file_path, "w") as file:
         file.write("#!/usr/bin/env python3\n")
@@ -85,6 +95,7 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool):
         file.write(f"game_exe_file_name = 'RiotClientServices.exe'\n")
         file.write('start_game_vars = dict(os.environ,\n')
         file.write(f"        PATH='{game_main_wine_dir}/lutris-ge-lol-7.0-6-x86_64/bin',\n")
+        file.write(f'        DRI_PRIME={prime_value},\n')
         file.write('        WINEARCH="win64",\n')
         file.write('        WINEPREFIX=game_prefix_dir,\n')
         file.write(f'        WINELOADER="{game_main_wine_dir}/lutris-ge-lol-7.0-6-x86_64/bin/wine",\n')
