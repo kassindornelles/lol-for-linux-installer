@@ -72,7 +72,6 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
     first_boot_envs = {**os.environ,
                        "PATH": f"{game_main_wine_dir}/{wine_version}/bin:{os.environ['PATH']}",
                        "DRI_PRIME": f"{prime_value}",
-                       "WINEARCH": "win64",
                        "WINEPREFIX": game_prefix_dir,
                        "WINELOADER": f"{game_main_wine_dir}/{wine_version}/bin/wine",
                        "WINEFSYNC": "1",
@@ -82,8 +81,7 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
                        }
 
     subprocess.run(["winetricks", "dxvk"], env=first_boot_envs, check=True)
-    wine_process = ["wine", league_installer_file]
-    subprocess.run(wine_process, env=first_boot_envs, check=True)
+    subprocess.run(["wine", league_installer_file], env=first_boot_envs, check=True)
 
     # create py script
     with open(game_launch_file_path, "w") as file:
@@ -96,11 +94,10 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
         file.write(f"game_exe_path = os.path.join(game_prefix_dir, 'drive_c', 'Riot Games', 'Riot Client')\n")
         file.write(f"game_exe_file_name = 'RiotClientServices.exe'\n")
         file.write('start_game_vars = dict(os.environ,\n')
-        file.write(f"        PATH='{game_main_wine_dir}/{wine_version}/bin',\n")
-        file.write(f'        DRI_PRIME="{prime_value}",\n')
-        file.write('        WINEARCH="win64",\n')
+        file.write(f"       PATH='{game_main_wine_dir}/{wine_version}/bin',\n")
+        file.write(f'       DRI_PRIME="{prime_value}",\n')
         file.write('        WINEPREFIX=game_prefix_dir,\n')
-        file.write(f'        WINELOADER="{game_main_wine_dir}/{wine_version}/bin/wine",\n')
+        file.write(f'       WINELOADER="{game_main_wine_dir}/{wine_version}/bin/wine",\n')
         file.write('        WINEFSYNC="1",\n')
         file.write('        WINEDEBUG="-all",\n')
         file.write('        WINEDLLOVERRIDES="winemenubuilder.exe=d",\n')
