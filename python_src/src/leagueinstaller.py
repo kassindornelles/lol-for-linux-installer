@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-import os, shutil, requests, tarfile, subprocess, json
-
+import os, shutil, requests, tarfile, subprocess, json, logging
+from PyQt5.QtCore import pyqtSignal, QObject
 
 def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bool):
 
     # Expose variables
-    print("Setting all variables")  # Cheap logging
+    logging.info("Setting all variables")  # Cheap logging
     wine_version = "lutris-ge-lol-7.0.8-x86_64"
     home_dir = os.environ.get('XDG_CONFIG_HOME') or os.path.expanduser('~/')
     game_downloads_dir = os.path.join(game_main_dir, 'downloads')
@@ -28,14 +28,14 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
                     os.path.join(user_hicolor_folder, "32x32"), os.path.join(user_hicolor_folder, "48x48"),
                     os.path.join(user_hicolor_folder, "64x64"), os.path.join(user_hicolor_folder, "128x128"),
                     os.path.join(user_hicolor_folder, "256x256"), user_applications_folder]
-    print("Creating folders for our League install")  # Cheap logging
+    logging.info("Creating folders for our League install")  # Cheap logging
     for folder_path in folder_paths:
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
             os.chmod(folder_path, 0o700)
 
     # Download necessary files
-    print("Downloading wine-lutris-lol build")  # Cheap logging
+    logging.info("Downloading wine-lutris-lol build")  # Cheap logging
     wine_lutris_build_url = "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/7.0-GE-8-LoL/wine-lutris-ge-lol-7.0.8-x86_64.tar.xz"
     tar_file_name = wine_version + ".tar.xz"
     wine_lutris_build_file = os.path.join(game_downloads_dir, tar_file_name)
@@ -43,20 +43,20 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
     with open(wine_lutris_build_file, "wb") as f:
         f.write(response.content)
 
-    print("Downloading League of Legends installer from", game_region_link)  # Cheap logging
+    logging.info("Downloading League of Legends installer from " + game_region_link)  # Cheap logging
     exe_file_name = "lolinstaller.exe"
     league_installer_file = os.path.join(game_downloads_dir, exe_file_name)
     response = requests.get(game_region_link)
     with open(league_installer_file, "wb") as f:
         f.write(response.content)
 
-    print("All files Downloaded")  # Cheap logging
+    logging.info("All files Downloaded")  # Cheap logging
 
     # Extract tar file
-    print("Extracting the wine-lutris-lol build file")  # Cheap logging
+    logging.info("Extracting the wine-lutris-lol build file")  # Cheap logging
     with tarfile.open(os.path.join(game_downloads_dir, tar_file_name)) as file:
         file.extractall(os.path.join(game_main_wine_dir))
-    print("Extraction on the wine-lutris-lol build file completed")  # Cheap logging
+    logging.info("Extraction on the wine-lutris-lol build file completed")  # Cheap logging
 
     # check prime
     if prime_bool:
@@ -103,7 +103,7 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
                 file.write('subprocess.run(wine_process, env=start_game_vars, check=True)\n')
 
         except:
-            print("Couldn't set PRIME")
+            logging.warning("Couldn't set PRIME")
     else:
         # Start the first-boot script to setup DXVK and the prefix
 
@@ -186,11 +186,11 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
                     os.makedirs(dest_folder)
                 shutil.move(os.path.join(github_icons_download_path, filename), dest_path)
 
-            print("Icons created")
+            logging.info("Icons created")
         except:
-            print("Couldn't create desktop files/download icons")
+            logging.warning("Couldn't create desktop files/download icons")
     else:
-        print("Skipping desktop icons")
+        logging.info("Skipping desktop icons")
 
     # create json file
     # Create a dictionary to hold the data
@@ -205,14 +205,14 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
     with open(os.path.join(user_config_folder, "league_install_path.json"), "w") as outfile:
         json.dump(data, outfile)
 
-    print("json file created")
+    logging.info("json file created")
 
     # Delete downloads folder
     try:
         shutil.rmtree(game_downloads_dir)
     except FileNotFoundError:
-        print(f"Directory {game_downloads_dir} does not exist")
-    print("Downloads folder deletion")
+        logging.warning(f"Directory {game_downloads_dir} does not exist")
+    logging.info("Downloads folder deletion")
 
     # Copy uninstaller
     try:
@@ -221,4 +221,4 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
     except:
         shutil.copy("/usr/share/lolforlinux/uninstall.py", os.path.join(game_main_dir, "uninstall.py"))
     os.chmod(os.path.join(game_main_dir, "uninstall.py"), 0o777)
-    print("Created uninstall.py file in game dir")
+    logging.info("Created uninstall.py file in game dir")

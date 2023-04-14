@@ -1,11 +1,34 @@
 #!/usr/bin/env python3
-import sys, os, signal, psutil
+import sys, os, signal, psutil, logging
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QComboBox, QCheckBox
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import QThread, QObject, QUrl
+from PyQt5.QtCore import QThread, QObject, QUrl, pyqtSignal
 from PyQt5.QtGui import QDesktopServices
 from python_src.src import leagueinstaller
 
+class GuiLogHandler(QObject, logging.Handler):
+    new_record = pyqtSignal(object)
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        super(logging.Handler).__init__()
+        formatter = Formatter('%(levelname)s: %(message)s', '%d/%m/%Y %H:%M:%S')
+        self.setFormatter(formatter)
+
+    def emit(self, record):
+        msg = self.format(record)
+        self.new_record.emit(msg) # <---- emit signal here
+
+class Formatter(logging.Formatter):
+    def formatException(self, ei):
+        result = super(Formatter, self).formatException(ei)
+        return result
+
+    def format(self, record):
+        s = super(Formatter, self).format(record)
+        if record.exc_text:
+            s = s.replace('\n', '')
+        return s
 
 class Installer(QMainWindow):
     def __init__(self):
@@ -40,6 +63,23 @@ class Installer(QMainWindow):
 
         # Terminate the main application process
         os.kill(pid, signal.SIGTERM)
+
+    def addPlainText(self, text: str):
+        self.textOuput.appendPlainText(text)
+
+    def setup_logger(self):
+
+        # Send info logs to textOutput
+        handler = GuiLogHandler(self)
+        logging.getLogger().addHandler(handler)
+        logging.getLogger().setLevel(logging.INFO)
+        handler.new_record.connect(self.textOutput.append)
+
+        # Send debug logs to stdout
+        stream_handler = logging.StreamHandler()
+        stream_handler.setFormatter(Formatter('%(levelname)s: %(message)s\n', '%d/%m/%Y %H:%M:%S'))
+        stream_handler.setLevel(logging.DEBUG)
+        logging.getLogger().addHandler(stream_handler)
 
     def installer_code(self):
         self.game_main_dir = QFileDialog.getExistingDirectory(self, 'Where do you want to install the game?')
@@ -89,6 +129,10 @@ class Installer(QMainWindow):
             region = region_map.get(selected_lang, "na")
             game_region_link = game_link.format(region)
 
+            self.setup_logger()
+            scrollbar = self.textOutput.verticalScrollBar()
+            scrollbar.setValue(scrollbar.maximum())
+
             self.thread = QThread()
             self.worker = Worker(self.game_main_dir, game_region_link, self.checkShortcut.isChecked(), self.checkPrime.isChecked())
             self.worker.moveToThread(self.thread)
@@ -117,6 +161,8 @@ class Worker(QObject):
         leagueinstaller.league_install_code(self.game_main_dir, self.game_region_link, self.create_shortcut, self.enable_prime)
         QApplication.quit()
 
+class QTextEditLogger(logging.Handler, QObject):
+    appendPlainText = pyqtSignal(str)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
