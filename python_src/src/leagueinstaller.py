@@ -81,7 +81,10 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
             subprocess.run(["wine", league_installer_file], env=first_boot_envs, check=True)
 
             # Copy .py script
-            shutil.copy("python_src/src/launch-league-of-legends-prime.py", os.path.join(game_main_dir, "launch-league-of-legends.py"))
+            try:
+                shutil.copy("python_src/src/launch-league-of-legends-prime.py", os.path.join(game_main_dir, "launch-league-of-legends.py"))
+            except:
+                shutil.copy("/usr/share/lolforlinux/launch-league-of-legends-prime.py", os.path.join(game_main_dir, "launch-league-of-legends.py"))
 
         except:
             logging.warning("Couldn't set PRIME")
@@ -103,7 +106,11 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool, prime_bo
         subprocess.run(["wine", league_installer_file], env=first_boot_envs, check=True)
 
         # create py script
-        shutil.copy("python_src/src/launch-league-of-legends.py", os.path.join(game_main_dir, "launch-league-of-legends.py"))
+        try:
+            shutil.copy("python_src/src/launch-league-of-legends.py", os.path.join(game_main_dir, "launch-league-of-legends.py"))
+        # Fallback for appimage
+        except:
+            shutil.copy("/usr/share/lolforlinux/launch-league-of-legends.py", os.path.join(game_main_dir, "launch-league-of-legends.py"))
 
     # Create .desktop file
     if shortcut_bool:
