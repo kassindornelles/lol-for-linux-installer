@@ -25,7 +25,7 @@ AppDir:
     id: com.polkaulfield.lolforlinux
     name: LoL for Linux Installer
     icon: league
-    version: 1.2.4
+    version: 1.3.2
     # Set the python executable as entry point
     exec: usr/bin/python3
     # Set the application main script path as argument. Use '$@' to forward CLI parameters
