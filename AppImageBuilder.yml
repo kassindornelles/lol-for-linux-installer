@@ -10,6 +10,8 @@ script:
   - cp -r python_src $TARGET_APPDIR/usr/src
   - cp -r 'Install League of Legends (Python).py' $TARGET_APPDIR/usr/src/main.py
   - cp python_src/src/uninstall.py $TARGET_APPDIR/usr/share/lolforlinux/
+  - cp python_src/src/launch-league-of-legends.py $TARGET_APPDIR/usr/share/lolforlinux/
+  - cp python_src/src/launch-league-of-legends-prime.py $TARGET_APPDIR/usr/share/lolforlinux/
   - cp -r python_src/ui $TARGET_APPDIR/usr/share/lolforlinux
   - cp icons/league256.png $TARGET_APPDIR/usr/share/icons/hicolor/256x256/apps/league.png
   # Install application dependencies
