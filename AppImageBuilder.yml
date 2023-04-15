@@ -23,7 +23,7 @@ AppDir:
 
   app_info:
     id: com.polkaulfield.lolforlinux
-    name: LoL for Linux Installer
+    name: LoL-for-Linux-Installer
     icon: league
     version: 1.3.2
     # Set the python executable as entry point
