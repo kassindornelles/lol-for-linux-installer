@@ -17,11 +17,11 @@ jobs:
           wget -O appimage-builder-x86_64.AppImage https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.1.0/appimage-builder-1.1.0-x86_64.AppImage
           chmod +x appimage-builder-x86_64.AppImage
           ./appimage-builder-x86_64.AppImage
-          mv *.AppImage lol-for-linux-installer.AppImage
+          mv LoL-for-Linux-Installer*.AppImage LoL-for-Linux-Installer.AppImage
           
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
-          path: "./lol-for-linux-installer.AppImage"
+          name: lol-for-linux-installer
+          path: "./LoL-for-Linux-Installer.AppImage"
         
