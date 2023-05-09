@@ -18,6 +18,7 @@ This software is not affiliated with nor supported by Riot Games.
 - It creates a desktop file in the system menu (with icons for the game)
 - Option to uninstall the game
 - Users of hybrid graphics can choose at install time if they want to use the dGPU or not
+- obs-gamecapture support.
 - Update system for WINE builds, DXVK version selection and more (DXVK installation via our launcher)
 
 ## <a name="dependencies"></a> Dependencies (install those packages system-wide first):
