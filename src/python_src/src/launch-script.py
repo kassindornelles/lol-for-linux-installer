@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 import os, subprocess, json
 
-cwd = os.getcwd()
-game_main_dir = os.path.join(cwd)
+
+json_file_path = os.path.expanduser("~/.config/league_install_path.json")
+
+with open(json_file_path, "r") as json_file:
+    data = json.load(json_file)
+    game_installed_folder = data["game_main_dir"]
+    os.chdir(game_installed_folder)
+
+game_main_dir = os.path.join(game_installed_folder)
 game_main_wine_dir = os.path.join(game_main_dir, 'wine')
 game_prefix_dir = os.path.join(game_main_wine_dir, 'prefix')
 game_exe_path = os.path.join(game_prefix_dir, 'drive_c', 'Riot Games', 'Riot Client')

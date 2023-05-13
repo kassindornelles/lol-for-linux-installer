@@ -240,12 +240,12 @@ class Installer(QMainWindow):
         os.chdir(self.game_installed_folder)
         if shutil.which('gamemoderun') is not None:
             try:
-                process = subprocess.Popen(['gamemoderun', 'python3', 'launch-script.py'])
+                process = subprocess.Popen(['gamemoderun', 'python3', '/usr/share/lol-for-linux-installer/python_src/src/launch-script.py'])
             except subprocess.CalledProcessError as e:
                 print("Error running the command with GameMode:", e)
         else:
             print("GameMode is not installed or not available.")
-            process = subprocess.Popen(['python3', 'launch-script.py'])
+            process = subprocess.Popen(['python3', '/usr/share/lol-for-linux-installer/python_src/src/launch-script.py'])
 
         installer.hide()
         process.wait()

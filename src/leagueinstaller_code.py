@@ -107,9 +107,4 @@ def league_install_code(game_main_dir, game_region_link):
     # Fallback for PKGBUILD/AppImage/Others
     except:
         logging.warning("Not copying any files, packing format is in use")
-
-    try:
-        os.chmod(os.path.join(game_main_dir, "launch-league-of-legends.py"), 0o777)
-    except:
-        os.chmod(os.path.join(game_main_dir, "launch-script.py"), 0o777)
     logging.info("Copied launcher")
