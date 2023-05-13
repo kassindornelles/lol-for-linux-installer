@@ -4,6 +4,12 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox,
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QThread, QObject, QUrl, pyqtSignal, QTimer
 from PyQt5.QtGui import QDesktopServices
+
+module_folder = "/usr/share/lol-for-linux-installer"
+
+# Add the module's folder to the Python path
+sys.path.append(module_folder)
+
 import leagueinstaller_code
 
 class GuiLogHandler(QObject, logging.Handler):
@@ -37,7 +43,7 @@ class Installer(QMainWindow):
         try:
             loadUi("python_src/ui/installer.ui", self)
         except:
-            loadUi("/usr/share/lolforlinux/ui/installer.ui", self)
+            loadUi("/usr/share/lol-for-linux-installer/python_src/ui/installer.ui", self)
         self.game_installed_folder = None
         self.setFixedSize(self.size())
         self.setWindowTitle('League of Legends Manager')

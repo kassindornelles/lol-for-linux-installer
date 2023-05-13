@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=League of Legends (lol-for-linux-installer)
+Comment=Launch lol-for-linux-installer
+Exec=/usr/bin/lol-for-linux-installer
+Icon=/usr/share/lol-for-linux-installer/icon.png
+Terminal=false
+Type=Application
+Categories=Game;

@@ -77,58 +77,58 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool):
         shutil.copy("python_src/src/launch-script.py", os.path.join(game_main_dir, "launch-script.py"))
     # Fallback for appimage
     except:
-        shutil.copy("/usr/share/lolforlinux/launch-script.py", os.path.join(game_main_dir, "launch-script.py"))
+        shutil.copy("/usr/share/lol-for-linux-installer/python_src/src/launch-script.py", os.path.join(game_main_dir, "launch-script.py"))
 
     # Create .desktop file
-    if shortcut_bool:
-        try:
-            if os.path.exists(desktop_file_path):
-                os.remove(desktop_file_path)
-
-            with open(desktop_file_path, "w") as file:
-                # Write file contents
-                file.write("[Desktop Entry]\n")
-                file.write("Name=League of Legends (Python Launcher)\n")
-                file.write("Comment=Play League of Legends on Linux\n")
-                file.write(f'Exec=python3 launch-league-of-legends.py\n')
-                file.write(f'Path={game_main_dir}\n')
-                file.write("Terminal=false\n")
-                file.write("Icon=leagueoflol\n")
-                file.write("Terminal=false\n")
-                file.write("Type=Application\n")
-                file.write("Categories=Game;\n")
-
-            os.chmod(desktop_file_path, 0o755)
-
-            # create icons for the desktop file
-            github_icons_url = "https://github.com/kassindornelles/lol-for-linux-bash-installer/raw/main/icons/league{}.png"
-            sizes = ["16", "32", "48", "64", "128", "256"]
-            github_icons_download_path = os.path.join(game_downloads_dir, "league-icons")
-
-            if not os.path.exists(github_icons_download_path):
-                os.makedirs(github_icons_download_path)
-
-            for size in sizes:
-                url = github_icons_url.format(size)
-                filename = "league{}.png".format(size)
-                dest_folder = os.path.join(user_hicolor_folder, size + "x" + size, "apps")
-                dest_path = os.path.join(dest_folder, "leagueoflol.png")
-
-                # Download the file
-                response = requests.get(url)
-                with open(os.path.join(github_icons_download_path, filename), "wb") as f:
-                    f.write(response.content)
-
-                # Move the file to the correct subfolder
-                if not os.path.exists(dest_folder):
-                    os.makedirs(dest_folder)
-                shutil.move(os.path.join(github_icons_download_path, filename), dest_path)
-
-            logging.info("Icons created")
-        except:
-            logging.warning("Couldn't create desktop files/download icons")
-    else:
-        logging.info("Skipping desktop icons")
+    # if shortcut_bool:
+    #     try:
+    #         if os.path.exists(desktop_file_path):
+    #             os.remove(desktop_file_path)
+    #
+    #         with open(desktop_file_path, "w") as file:
+    #             # Write file contents
+    #             file.write("[Desktop Entry]\n")
+    #             file.write("Name=League of Legends (Python Launcher)\n")
+    #             file.write("Comment=Play League of Legends on Linux\n")
+    #             file.write(f'Exec=python3 launch-league-of-legends.py\n')
+    #             file.write(f'Path={game_main_dir}\n')
+    #             file.write("Terminal=false\n")
+    #             file.write("Icon=leagueoflol\n")
+    #             file.write("Terminal=false\n")
+    #             file.write("Type=Application\n")
+    #             file.write("Categories=Game;\n")
+    #
+    #         os.chmod(desktop_file_path, 0o755)
+    #
+    #         # create icons for the desktop file
+    #         github_icons_url = "https://github.com/kassindornelles/lol-for-linux-bash-installer/raw/main/icons/league{}.png"
+    #         sizes = ["16", "32", "48", "64", "128", "256"]
+    #         github_icons_download_path = os.path.join(game_downloads_dir, "league-icons")
+    #
+    #         if not os.path.exists(github_icons_download_path):
+    #             os.makedirs(github_icons_download_path)
+    #
+    #         for size in sizes:
+    #             url = github_icons_url.format(size)
+    #             filename = "league{}.png".format(size)
+    #             dest_folder = os.path.join(user_hicolor_folder, size + "x" + size, "apps")
+    #             dest_path = os.path.join(dest_folder, "leagueoflol.png")
+    #
+    #             # Download the file
+    #             response = requests.get(url)
+    #             with open(os.path.join(github_icons_download_path, filename), "wb") as f:
+    #                 f.write(response.content)
+    #
+    #             # Move the file to the correct subfolder
+    #             if not os.path.exists(dest_folder):
+    #                 os.makedirs(dest_folder)
+    #             shutil.move(os.path.join(github_icons_download_path, filename), dest_path)
+    #
+    #         logging.info("Icons created")
+    #     except:
+    #         logging.warning("Couldn't create desktop files/download icons")
+    # else:
+    #     logging.info("Skipping desktop icons")
 
     # Create a dictionary to hold the install dir data
     data_folder = {
@@ -170,6 +170,10 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool):
         shutil.copy("env_vars.json", os.path.join(game_main_dir, "env_vars.json"))
     # Fallback for AppImage
     except:
-        shutil.copy("/usr/share/lolforlinux/launch-league-of-legends.py", os.path.join(game_main_dir, "launch-league-of-legends.py"))
+        shutil.copy("/usr/share/bin/lol-for-linux-installer", os.path.join(game_main_dir, "launch-league-of-legends.py"))
+        shutil.copy("/usr/share/lol-for-linux-installer/python_src/ui/installer.ui", os.path.join(game_main_dir, "python_src", "ui", "installer.ui"))
+        shutil.copy("/usr/share/lol-for-linux-installer/python_src/ui/lolbanner.jpeg", os.path.join(game_main_dir, "python_src", "ui", "lolbanner.jpeg"))
+        shutil.copy("/usr/share/lol-for-linux-installer/leagueinstaller_code.py", os.path.join(game_main_dir, "leagueinstaller_code.py"))
+        shutil.copy("/usr/share/lol-for-linux-installer/env_vars.json", os.path.join(game_main_dir, "env_vars.json"))
     os.chmod(os.path.join(game_main_dir, "launch-league-of-legends.py"), 0o777)
     logging.info("Copied launcher")
