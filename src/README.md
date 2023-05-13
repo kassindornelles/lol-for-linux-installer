@@ -7,11 +7,18 @@ This software is not affiliated with nor supported by Riot Games.
 ![Screenshot_20230415_205958](https://user-images.githubusercontent.com/40970965/232259098-0e51d868-cfb8-4312-aab4-6e84728c5f24.png)
 ![Screenshot_20230512_212003](https://github.com/kassindornelles/lol-for-linux-installer/assets/40970965/1fdd188a-8af5-4401-8b0c-f66a8ff82ff0)
 
-## How to install it
+## How to use it (without installing)
 - Check if you have all required [dependencies](#dependencies) installed first
 - Download the latest release from the [Releases page](https://github.com/kassindornelles/lol-for-linux-bash-installer/releases)
 - Extract the files
-- Double-click 'launch-league-of-legends.py' and install the game or manage your already existent install.
+- Double-click 'lol-for-linux-installer.py' and install the game or manage your already existent install.
+
+## How to install using the PKGBUILD (Arch Linux based distributions)
+- Download this repository
+- Extract all files
+- Inside the folder the `PKGBUILD` file is you have to open a console/terminal and run `makepkg -si`
+- After that it should download the required dependencies to make the game work and also install our launcher.
+- After installed; a .desktop-type shortcut will appear in your system menu to install/manage the game.
 
 ### Python Script features:
 - You can choose where to install the game and also the region you are going to play
