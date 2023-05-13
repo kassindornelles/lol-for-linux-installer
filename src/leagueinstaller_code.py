@@ -2,34 +2,22 @@
 import os, shutil, requests, tarfile, subprocess, json, logging
 from PyQt5.QtCore import pyqtSignal, QObject
 
-def league_install_code(game_main_dir, game_region_link, shortcut_bool):
+def league_install_code(game_main_dir, game_region_link):
 
     # Expose variables
     logging.info("Setting all variables")  # Cheap logging
     wine_version = "wine-build"
     home_dir = os.environ.get('XDG_CONFIG_HOME') or os.path.expanduser('~/')
     game_downloads_dir = os.path.join(game_main_dir, 'downloads')
-    game_winetricks_cache_dir = os.path.join(game_downloads_dir, "winetricks-cache")
     game_main_wine_dir = os.path.join(game_main_dir, 'wine')
     game_prefix_dir = os.path.join(game_main_wine_dir, 'prefix')
     user_local_share = os.path.join(home_dir, ".local/share")
-
-    user_icons_folder = os.path.join(home_dir, user_local_share, "icons")
-    user_hicolor_folder = os.path.join(user_icons_folder, "hicolor")
-    user_applications_folder = os.path.join(home_dir, user_local_share, "applications")
-    desktop_file_path = os.path.join(os.path.expanduser("~"), ".local", "share", "applications",
-                                     "LeagueLauncherPython.desktop")
     game_launch_file_path = os.path.join(game_main_dir, "launch-league-of-legends.py")
     user_config_folder= os.path.join(home_dir, ".config")
-    ui_dir = os.path.join(game_main_dir, "python_src", "ui")
     wine_loader_path = os.path.join(game_main_wine_dir, 'wine-build', 'bin', 'wine')
 
     # Create all folders that we are going to use
-    folder_paths = [game_main_dir, game_downloads_dir, game_main_wine_dir, game_prefix_dir, user_config_folder, game_winetricks_cache_dir,
-                    user_icons_folder, user_hicolor_folder, os.path.join(user_hicolor_folder, "16x16"),
-                    os.path.join(user_hicolor_folder, "32x32"), os.path.join(user_hicolor_folder, "48x48"),
-                    os.path.join(user_hicolor_folder, "64x64"), os.path.join(user_hicolor_folder, "128x128"),
-                    os.path.join(user_hicolor_folder, "256x256"), user_applications_folder, ui_dir]
+    folder_paths = [game_main_dir, game_downloads_dir, game_main_wine_dir, game_prefix_dir, user_config_folder]
     logging.info("Creating folders for our League install")  # Cheap logging
     for folder_path in folder_paths:
         if not os.path.exists(folder_path):
