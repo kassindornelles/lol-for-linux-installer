@@ -1,11 +1,11 @@
 pkgname=lol-for-linux-installer
 pkgver=2.1  # Specify the version of your package
 pkgrel=1  # Package release number
-pkgdesc="Description of your package"
+pkgdesc="League of Legends installer and manager for Linux"
 arch=('x86_64')  # Specify the supported architecture(s) for your package
-url="https://example.com"  # URL of your project's website
+url="https://github.com/kassindornelles/lol-for-linux-installer"  # URL of your project's website
 license=('GPL-3.0')  # Specify the license for your package
-depends=('python' 'python-psutil' 'python-pyqt5' 'wine' 'python-requests' 'qt5-base' 'tar')  # Specify any dependencies required by your program
+depends=('python' 'python-psutil' 'python-pyqt5' 'wine' 'python-requests' 'qt5-base' 'tar' 'lib32-gnutls' 'gnutls' 'lib32-libldap' 'libldap' 'libpng' 'lib32-libpng' 'mesa' 'lib32-mesa' 'libgphoto2' 'libpulse' 'lib32-libpulse')  # Specify any dependencies required by your program
 
 package() {
   cd "$srcdir"
