@@ -100,7 +100,7 @@ def league_install_code(game_main_dir, game_region_link):
 
     # Copy launcher
     try:
-        shutil.copy("launch-league-of-legends.py", os.path.join(game_main_dir, "launch-league-of-legends.py"))
+        shutil.copy("lol-for-linux-installer.py", os.path.join(game_main_dir, "lol-for-linux-installer.py"))
         shutil.copy("python_src/ui/installer.ui", os.path.join(game_main_dir, "python_src", "ui", "installer.ui"))
         shutil.copy("python_src/ui/lolbanner.jpeg", os.path.join(game_main_dir, "python_src", "ui", "lolbanner.jpeg"))
         shutil.copy("leagueinstaller_code.py", os.path.join(game_main_dir, "leagueinstaller_code.py"))

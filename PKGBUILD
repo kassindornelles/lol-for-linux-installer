@@ -11,7 +11,7 @@ package() {
   cd "$srcdir"
 
   # Copy launch-league-of-legends.py
-  install -Dm755 launch-league-of-legends.py "$pkgdir/usr/bin/lol-for-linux-installer"
+  install -Dm755 lol-for-linux-installer.py "$pkgdir/usr/bin/lol-for-linux-installer"
 
   # Copy other necessary files and directories
   install -Dm644 env_vars.json "$pkgdir/usr/share/lol-for-linux-installer/env_vars.json"
