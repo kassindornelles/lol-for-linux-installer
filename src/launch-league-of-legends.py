@@ -250,7 +250,7 @@ class Installer(QMainWindow):
         installer.hide()
         process.wait()
 
-        if not self.is_process_running("RiotClientServi"):
+        if not self.is_process_running("RiotClientServices.exe"):
             self.launchLeagueinstalled.setEnabled(True)
             self.uninstallLeaguebutton.setEnabled(True)
             installer.show()
