@@ -465,6 +465,13 @@ class Installer(QMainWindow):
             scrollbar = self.textOutput.verticalScrollBar()
             scrollbar.setValue(scrollbar.maximum())
 
+            try:
+                shutil.copy("env_vars.json", os.path.join(self.game_main_dir, "env_vars.json"))
+                os.chdir(self.game_main_dir)
+            except:
+                shutil.copy("/usr/share/lol-for-linux-installer/env_vars.json", os.path.join(self.game_main_dir, "env_vars.json"))
+                os.chdir(self.game_main_dir)
+
             with open('env_vars.json', 'r') as f:
                 env_vars = json.load(f)
 

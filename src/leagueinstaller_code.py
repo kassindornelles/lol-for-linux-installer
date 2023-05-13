@@ -167,13 +167,11 @@ def league_install_code(game_main_dir, game_region_link, shortcut_bool):
         shutil.copy("python_src/ui/installer.ui", os.path.join(game_main_dir, "python_src", "ui", "installer.ui"))
         shutil.copy("python_src/ui/lolbanner.jpeg", os.path.join(game_main_dir, "python_src", "ui", "lolbanner.jpeg"))
         shutil.copy("leagueinstaller_code.py", os.path.join(game_main_dir, "leagueinstaller_code.py"))
-        shutil.copy("env_vars.json", os.path.join(game_main_dir, "env_vars.json"))
     # Fallback for AppImage
     except:
         shutil.copy("/usr/share/bin/lol-for-linux-installer", os.path.join(game_main_dir, "launch-league-of-legends.py"))
         shutil.copy("/usr/share/lol-for-linux-installer/python_src/ui/installer.ui", os.path.join(game_main_dir, "python_src", "ui", "installer.ui"))
         shutil.copy("/usr/share/lol-for-linux-installer/python_src/ui/lolbanner.jpeg", os.path.join(game_main_dir, "python_src", "ui", "lolbanner.jpeg"))
         shutil.copy("/usr/share/lol-for-linux-installer/leagueinstaller_code.py", os.path.join(game_main_dir, "leagueinstaller_code.py"))
-        shutil.copy("/usr/share/lol-for-linux-installer/env_vars.json", os.path.join(game_main_dir, "env_vars.json"))
     os.chmod(os.path.join(game_main_dir, "launch-league-of-legends.py"), 0o777)
     logging.info("Copied launcher")
