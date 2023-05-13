@@ -192,7 +192,7 @@
            <item>
             <widget class="QStackedWidget" name="stackedWidget">
              <property name="currentIndex">
-              <number>1</number>
+              <number>3</number>
              </property>
              <widget class="QWidget" name="welcome">
               <widget class="QLabel" name="adviselabel">
@@ -1224,22 +1224,6 @@
               </widget>
              </widget>
              <widget class="QWidget" name="options">
-              <widget class="QCheckBox" name="checkShortcut">
-               <property name="geometry">
-                <rect>
-                 <x>190</x>
-                 <y>80</y>
-                 <width>181</width>
-                 <height>22</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>Create desktop shortcut</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
               <widget class="QCheckBox" name="checkPrime">
                <property name="enabled">
                 <bool>true</bool>
@@ -1247,7 +1231,7 @@
                <property name="geometry">
                 <rect>
                  <x>190</x>
-                 <y>110</y>
+                 <y>80</y>
                  <width>311</width>
                  <height>22</height>
                 </rect>
@@ -1342,7 +1326,7 @@
                <property name="geometry">
                 <rect>
                  <x>190</x>
-                 <y>140</y>
+                 <y>120</y>
                  <width>321</width>
                  <height>21</height>
                 </rect>

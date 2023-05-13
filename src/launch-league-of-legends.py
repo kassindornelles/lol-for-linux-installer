@@ -433,7 +433,6 @@ class Installer(QMainWindow):
         if self.game_main_dir:
             self.cancelButton.show()
             self.cancelButton.setEnabled(True)
-            self.checkShortcut.setEnabled(False)
             self.welcomelabel.setText("We are installing the game for you...")
             self.install_button.setEnabled(False)
             self.languageComboBox.setEnabled(False)
@@ -516,7 +515,7 @@ class Installer(QMainWindow):
                     json.dump(env_vars, f, indent=4)
 
             self.thread = QThread()
-            self.worker = Worker(self.game_main_dir, game_region_link, self.checkShortcut.isChecked())
+            self.worker = Worker(self.game_main_dir, game_region_link)
             self.worker.moveToThread(self.thread)
             self.thread.started.connect(self.worker.run)
             self.thread.finished.connect(self.finish_installation)
