@@ -15,7 +15,7 @@ package() {
 
   # Copy other necessary files and directories
   install -Dm644 env_vars.json "$pkgdir/usr/share/lol-for-linux-installer/env_vars.json"
-  install -Dm644 icon.png "$pkgdir/usr/share/lol-for-linux-installer/icon.png"
+  install -Dm644 lol-for-linux-installer.png "$pkgdir/usr/share/lol-for-linux-installer/lol-for-linux-installer.png"
   install -Dm644 leagueinstaller_code.py "$pkgdir/usr/share/lol-for-linux-installer/leagueinstaller_code.py"
   # Install the desktop file
   install -Dm644 "$srcdir/lol-for-linux-installer.desktop" "$pkgdir/usr/share/applications/lol-for-linux-installer.desktop"
