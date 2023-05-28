@@ -109,6 +109,7 @@ class Installer(QMainWindow):
         if 'VK_LAYER_VKBASALT_post_processing' not in vulkan_layers.LAYERS:
             self.vkbasaltcheckbox.setChecked(False)
             self.vkbasaltcheckbox.setEnabled(False)
+            self.vkbasaltslider.setEnabled(False)
 
     def load_env_vars(self, env_vars, installer, enablevkbasaltsettings):
         game_launcher_options = env_vars.get("game_launcher_options", {})
