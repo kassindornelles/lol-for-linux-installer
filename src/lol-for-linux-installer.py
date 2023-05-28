@@ -12,6 +12,8 @@ sys.path.append(module_folder)
 
 import leagueinstaller_code
 
+import vulkan_layers
+
 class GuiLogHandler(QObject, logging.Handler):
     new_record = pyqtSignal(object)
 
