@@ -1762,6 +1762,11 @@
                </item>
                <item>
                 <property name="text">
+                 <string extracomment="tw2">TW (TW2) - Taiwan</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string extracomment="tr">TR (TR1) - Turkey</string>
                 </property>
                </item>

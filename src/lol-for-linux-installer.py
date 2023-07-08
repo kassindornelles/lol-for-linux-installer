@@ -500,6 +500,7 @@ class Installer(QMainWindow):
                 "RU (RU1) - Russia": "ru",
                 "EUW (EUW1) - Europe West": "euw",
                 "EUNE (EUN1) - Europe Nordic & East": "eune",
+                "TW (TW2) - Taiwan": "tw2",
                 "TR (TR1) - Turkey": "tr",
                 "JP (JP1) - Japan": "jp",
                 "KR (KR) - Republic of Korea": "kr",
