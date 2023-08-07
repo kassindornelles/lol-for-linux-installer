@@ -5,12 +5,8 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import QThread, QObject, QUrl, pyqtSignal, Qt, QCoreApplication
 from PyQt5.QtGui import QDesktopServices, QIcon
 
-if 'container' in os.environ:
-    module_folder = "/app/usr/share/lol-for-linux-installer"
-    sys.path.append(module_folder)
-else:
-    module_folder = "/usr/share/lol-for-linux-installer"
-    sys.path.append(module_folder)
+module_folder = "/usr/share/lol-for-linux-installer"
+sys.path.append(module_folder)
 
 import leagueinstaller_code
 import vulkan_layers
@@ -42,17 +38,10 @@ class Formatter(logging.Formatter):
 class Installer(QMainWindow):
     def __init__(self):
         super(Installer, self).__init__()
-        if 'container' in os.environ:
-            try:
-                loadUi("/app/usr/share/lol-for-linux-installer/installer.ui", self)
-            except:
-                loadUi("/app/usr/share/lol-for-linux-installer/installer.ui", self)
-        else:
-            try:
-                loadUi("installer.ui", self)
-            except:
-                loadUi("/usr/share/lol-for-linux-installer/installer.ui", self)
-
+        try:
+            loadUi("installer.ui", self)
+        except:
+            loadUi("/usr/share/lol-for-linux-installer/installer.ui", self)
         self.slider_value_changed = False
         self.game_installed_folder = None
         self.gamemode_value = None
@@ -465,33 +454,31 @@ class Installer(QMainWindow):
         logging.getLogger().addHandler(stream_handler)
 
     def installer_code(self):
-
-        if 'container' in os.environ:
-            self.game_main_dir = os.path.join(os.path.expanduser("~"), "league-of-legends")
-            os.makedirs(self.game_main_dir)
-        else:
-            self.game_main_dir = QFileDialog.getExistingDirectory(self, 'Where do you want to install the game?')
-            while self.game_main_dir and os.path.abspath(self.game_main_dir) == os.path.expanduser("~"):
-                msg_box = QMessageBox(self)
-                msg_box.setIcon(QMessageBox.Critical)
-                msg_box.setText("Cannot install the game directly in the home directory.")
-                msg_box.setInformativeText("Please create a folder in your home directory instead so we can use it")
-                msg_box.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-                msg_box.setDefaultButton(QMessageBox.Ok)
-                if msg_box.exec_() == QMessageBox.Ok:
-                    self.game_main_dir = QFileDialog.getExistingDirectory(self, 'Where do you want to install the game?')
-                else:
-                    self.game_main_dir = None
-
-            if not os.path.abspath(self.game_main_dir).startswith(os.path.expanduser("~")):
-                msg_box = QMessageBox(self)
-                msg_box.setIcon(QMessageBox.Critical)
-                msg_box.setText("Invalid directory selected.")
-                msg_box.setInformativeText("Please select a directory within your home directory.")
-                msg_box.setStandardButtons(QMessageBox.Ok)
-                msg_box.setDefaultButton(QMessageBox.Ok)
-                msg_box.exec_()
+        self.game_main_dir = QFileDialog.getExistingDirectory(self, 'Where do you want to install the game?')
+        while self.game_main_dir and os.path.abspath(self.game_main_dir) == os.path.expanduser("~"):
+            msg_box = QMessageBox(self)
+            msg_box.setIcon(QMessageBox.Critical)
+            msg_box.setText("Cannot install the game directly in the home directory.")
+            msg_box.setInformativeText("Please create a folder in your home directory instead so we can use it")
+            msg_box.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            msg_box.setDefaultButton(QMessageBox.Ok)
+            if msg_box.exec_() == QMessageBox.Ok:
                 self.game_main_dir = QFileDialog.getExistingDirectory(self, 'Where do you want to install the game?')
+            else:
+                self.game_main_dir = None
+
+        if not os.path.abspath(self.game_main_dir).startswith(os.path.expanduser("~")):
+            msg_box = QMessageBox(self)
+            msg_box.setIcon(QMessageBox.Critical)
+            msg_box.setText("Invalid directory selected.")
+            msg_box.setInformativeText("Please select a directory within your home directory.")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.setDefaultButton(QMessageBox.Ok)
+            msg_box.exec_()
+            self.game_main_dir = QFileDialog.getExistingDirectory(self, 'Where do you want to install the game?')
+
+        self.game_main_dir = os.path.join(self.game_main_dir, "league-of-legends")
+        os.makedirs(self.game_main_dir)
 
         if self.game_main_dir:
             self.cancelButton.show()
@@ -525,20 +512,13 @@ class Installer(QMainWindow):
             self.setup_logger()
             scrollbar = self.textOutput.verticalScrollBar()
             scrollbar.setValue(scrollbar.maximum())
-            if 'container' in os.environ:
-                try:
-                    shutil.copy("env_vars.json", os.path.join(self.game_main_dir, "env_vars.json"))
-                    os.chdir(self.game_main_dir)
-                except:
-                    shutil.copy("/app/usr/share/lol-for-linux-installer/env_vars.json", os.path.join(self.game_main_dir, "env_vars.json"))
-                    os.chdir(self.game_main_dir)
-            else:
-                try:
-                    shutil.copy("env_vars.json", os.path.join(self.game_main_dir, "env_vars.json"))
-                    os.chdir(self.game_main_dir)
-                except:
-                    shutil.copy("/usr/share/lol-for-linux-installer/env_vars.json", os.path.join(self.game_main_dir, "env_vars.json"))
-                    os.chdir(self.game_main_dir)
+
+            try:
+                shutil.copy("env_vars.json", os.path.join(self.game_main_dir, "env_vars.json"))
+                os.chdir(self.game_main_dir)
+            except:
+                shutil.copy("/usr/share/lol-for-linux-installer/env_vars.json", os.path.join(self.game_main_dir, "env_vars.json"))
+                os.chdir(self.game_main_dir)
 
             with open('env_vars.json', 'r') as f:
                 env_vars = json.load(f)
