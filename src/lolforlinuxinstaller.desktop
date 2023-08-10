@@ -2,7 +2,7 @@
 Version=1.0
 Name=League of Legends (lol-for-linux-installer)
 Comment=Launch lol-for-linux-installer
-Exec=com.kassindornelles.lolforlinuxinstaller
+Exec=lolforlinuxinstaller
 Icon=/usr/share/lol-for-linux-installer/lolforlinuxinstaller.svg
 Terminal=false
 Type=Application
