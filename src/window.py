@@ -589,15 +589,3 @@ class Worker(QObject):
 class QTextEditLogger(logging.Handler, QObject):
     appendPlainText = pyqtSignal(str)
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    app.setDesktopFileName("lolforlinuxinstaller")
-    if os.getuid() == 0:
-        msg_box = QMessageBox()
-        msg_box.setText("Don't run this as sudo user")
-        msg_box.exec_()
-        sys.exit(1)
-
-    installer = Installer()
-    installer.show()
-    sys.exit(app.exec_())
