@@ -2,7 +2,7 @@
 
 import sys, os
 from PyQt5.QtWidgets import QApplication, QMessageBox
-from lolforlinuxinstaller import Installer
+from window import Installer
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
