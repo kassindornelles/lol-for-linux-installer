@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os, shutil, requests, tarfile, subprocess, json, logging, urllib.request
-from PyQt5.QtCore import pyqtSignal, QObject
 
 def install_dxvk_code(game_main_dir):
     dst_path = os.path.join(game_main_dir, 'wine', 'prefix', 'drive_c', 'windows')

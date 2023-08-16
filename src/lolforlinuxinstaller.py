@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import sys, os, signal, psutil, logging, json, urllib.request, shutil, tarfile, subprocess
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QComboBox, QCheckBox, QSlider
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QSlider
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import QThread, QObject, QUrl, pyqtSignal, Qt, QCoreApplication
-from PyQt5.QtGui import QDesktopServices, QIcon
+from PyQt5.QtCore import QThread, QObject, QUrl, pyqtSignal
+from PyQt5.QtGui import QDesktopServices
 
 module_folder = "/usr/share/lol-for-linux-installer"
 sys.path.append(module_folder)
