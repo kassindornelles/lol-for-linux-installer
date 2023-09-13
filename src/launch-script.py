@@ -37,9 +37,6 @@ wine_process = [
     "--launch-patchline=live"
 ]
 
-print(wine_process)
-
-subprocess.Popen(['python3', '/home/rafal/league-rpc-linux/main.py'])
 subprocess.run(wine_process, env=start_game_vars, check=True)
 
 
