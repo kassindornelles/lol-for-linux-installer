@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os, shutil, requests, tarfile, subprocess, json, logging, urllib.request
+import os, shutil, requests, tarfile, zipfile, subprocess, json, logging, urllib.request
 
 def install_dxvk_code(game_main_dir):
     dst_path = os.path.join(game_main_dir, 'wine', 'prefix', 'drive_c', 'windows')
@@ -26,6 +26,17 @@ def install_dxvk_code(game_main_dir):
 
     os.remove(filename)
     shutil.rmtree(tmp_path)
+
+def install_richpresence_code(game_main_dir):
+    rpcUrl = 'https://github.com/daglaroglou/league-rpc-linux/archive/refs/heads/main.zip'
+    rpcFilename = os.path.basename(rpcUrl)
+    urllib.request.urlretrieve(rpcUrl, rpcFilename)
+
+    with zipfile.ZipFile(rpcFilename) as rpcZip:
+        rpcZip.extractall()
+
+    os.remove(rpcFilename)
+    subprocess.Popen(['python3', os.path.join(game_main_dir, "league-rpc-linux-main", "setup.py")])
 
 def league_install_code(game_main_dir, game_region_link):
     logging.info("Setting all variables")
@@ -108,4 +119,6 @@ def league_install_code(game_main_dir, game_region_link):
 
     logging.info("Installing DXVK 1.10.3...")
     install_dxvk_code(game_main_dir)
+    logging.info("Installing Discord Rich Presence...")
+    install_richpresence_code(game_main_dir)
     logging.info("Finishing...")
