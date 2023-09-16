@@ -44,6 +44,7 @@ class Installer(QMainWindow):
             loadUi("/usr/share/lol-for-linux-installer/installer.ui", self)
         self.slider_value_changed = False
         self.game_installed_folder = None
+        self.game_rpc_folder = None
         self.gamemode_value = None
         self.richpresence_value = None
         self.skiplauncher_value = None
@@ -90,6 +91,7 @@ class Installer(QMainWindow):
 
                 self.load_env_vars(env_vars, self)
                 self.download_winebuild_json()
+                self.game_rpc_folder = os.path.join(self.game_installed_folder, 'league-rpc-linux-main')
 
         except FileNotFoundError:
             self.stackedWidget.setCurrentWidget(self.welcome)
@@ -164,7 +166,7 @@ class Installer(QMainWindow):
         else:
             self.Usegamemode.setChecked(False)
 
-        if game_settings.get("RichPresence") == "1":
+        if game_settings.get("Richpresence") == "1":
             self.Richpresence.setChecked(True)
         else:
             self.Richpresence.setChecked(False)
@@ -280,8 +282,8 @@ class Installer(QMainWindow):
         env_vars['game_settings']['Gamemode'] = '1' if self.Usegamemode.isChecked() else '0'
         self.gamemode_value = int(env_vars['game_settings']['Gamemode'])
 
-        env_vars['game_settings']['RichPresence'] = '1' if self.Richpresence.isChecked() else '0'
-        self.richpresence_value = int(env_vars['game_settings']['RichPresence'])
+        env_vars['game_settings']['Richpresence'] = '1' if self.Richpresence.isChecked() else '0'
+        self.richpresence_value = int(env_vars['game_settings']['Richpresence'])
 
         env_vars['game_settings']['Skiplauncher'] = '1' if self.skiplaunchercheck.isChecked() else '0'
         self.skiplauncher_value = int(env_vars['game_settings']['Skiplauncher'])
@@ -382,10 +384,10 @@ class Installer(QMainWindow):
             env_vars = json.load(env_vars_file)
             game_settings = env_vars.get('game_settings', {})
             gamemode_value = int(game_settings.get('Gamemode', '0'))
-            richpresence_value = int(game_settings.get('RichPresence', '0'))
+            richpresence_value = int(game_settings.get('Richpresence', '0'))
             
         if richpresence_value == 1:
-            richPresenceLaunch = subprocess.Popen(['python3', os.path.join(self.game_installed_folder, "league-rpc-linux-main", "main.py")])
+            richPresenceLaunch = subprocess.Popen([os.path.join(self.game_rpc_folder, 'venv', 'bin', 'python3'), os.path.join(self.game_rpc_folder, "main.py")])
             print("Using Rich Presence.")
         else:
             print("Not using Rich Presence.")

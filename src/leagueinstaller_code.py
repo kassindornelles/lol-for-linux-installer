@@ -30,13 +30,15 @@ def install_dxvk_code(game_main_dir):
 def install_richpresence_code(game_main_dir):
     rpcUrl = 'https://github.com/daglaroglou/league-rpc-linux/archive/refs/heads/main.zip'
     rpcFilename = os.path.basename(rpcUrl)
+    rpcDir = os.path.join(game_main_dir, 'league-rpc-linux-main')
     urllib.request.urlretrieve(rpcUrl, rpcFilename)
 
     with zipfile.ZipFile(rpcFilename) as rpcZip:
         rpcZip.extractall()
 
     os.remove(rpcFilename)
-    subprocess.Popen(['python3', os.path.join(game_main_dir, "league-rpc-linux-main", "setup.py")])
+    subprocess.run(['python3', '-m', 'venv', os.path.join(rpcDir, 'venv')])
+    subprocess.run([os.path.join(rpcDir, 'venv', 'bin', 'pip'), 'install', '-r', os.path.join(rpcDir, 'requirements.txt')])
 
 def league_install_code(game_main_dir, game_region_link):
     logging.info("Setting all variables")
