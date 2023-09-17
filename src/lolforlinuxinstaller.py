@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import sys, os, signal, psutil, logging, json, urllib.request, shutil, tarfile, subprocess
+import sys, os, signal, psutil, logging, json, urllib.request, shutil, zipfile, tarfile, subprocess
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QSlider
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QThread, QObject, QUrl, pyqtSignal
@@ -92,6 +92,9 @@ class Installer(QMainWindow):
                 self.load_env_vars(env_vars, self)
                 self.download_winebuild_json()
                 self.game_rpc_folder = os.path.join(self.game_installed_folder, 'league-rpc-linux-main')
+                
+                if os.path.isdir(self.game_rpc_folder) == False and self.Richpresence.isChecked():
+                    self.Richpresence.setChecked(False)
 
         except FileNotFoundError:
             self.stackedWidget.setCurrentWidget(self.welcome)
@@ -234,6 +237,12 @@ class Installer(QMainWindow):
         else:
             env_vars['game_launcher_options'].pop('DRI_PRIME', None)
 
+        if self.Richpresence.isChecked() and os.path.isdir(self.game_rpc_folder) == False:
+            self.install_richpresence_code(self.game_installed_folder)
+        elif self.Richpresence.isChecked() == False and os.path.isdir(self.game_rpc_folder):
+            shutil.rmtree(self.game_rpc_folder)
+
+
         if self.Usenvidiahybrid.isChecked():
             new_vars = {
                 'NV_PRIME_RENDER_OFFLOAD': '1',
@@ -372,6 +381,18 @@ class Installer(QMainWindow):
         os.remove(filename)
         shutil.rmtree(tmp_path)
         self.rendererCombobox.setEnabled(False)
+
+    def install_richpresence_code(self, game_installed_folder):
+        rpcUrl = 'https://github.com/daglaroglou/league-rpc-linux/archive/refs/heads/main.zip'
+        rpcFilename = os.path.basename(rpcUrl)
+        urllib.request.urlretrieve(rpcUrl, rpcFilename)
+
+        with zipfile.ZipFile(rpcFilename) as rpcZip:
+            rpcZip.extractall()
+
+        os.remove(rpcFilename)
+        subprocess.run(['python3', '-m', 'venv', os.path.join(self.game_rpc_folder, 'venv')])
+        subprocess.run([os.path.join(self.game_rpc_folder, 'venv', 'bin', 'pip'), 'install', '-r', os.path.join(self.game_rpc_folder, 'requirements.txt')])
 
     def launchleague(self, installer):
         self.launchLeagueinstalled.setEnabled(False)
