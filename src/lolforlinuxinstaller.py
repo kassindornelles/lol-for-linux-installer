@@ -66,7 +66,6 @@ class Installer(QMainWindow):
         self.gamemode_value = None
         self.richpresence_value = None
         self.skiplauncher_value = None
-        self.vkbasaltslider = self.findChild(QSlider, "vkbasaltslider")
         self.setWindowTitle("lol-for-linux-installer")
         self.install_button.clicked.connect(self.installer_code)
         self.cancelButton.clicked.connect(self.cancel_installation)
@@ -343,7 +342,6 @@ class Installer(QMainWindow):
                     file_path, wine_build_dir, wine_build_dir
                 )
             self.winebuildcombobox.setCurrentIndex(0)
-            self.winebuildcombobox.setEnabled(False)
 
         if "DXVK" in current_renderer:
             dxvk_version = current_renderer.replace("DXVK ", "")
@@ -431,7 +429,6 @@ class Installer(QMainWindow):
 
         os.remove(filename)
         shutil.rmtree(tmp_path)
-        self.rendererCombobox.setEnabled(False)
 
     def install_richpresence_code(self, game_installed_folder):
         rpcUrl = "https://github.com/kassindornelles/league-rpc-linux/archive/refs/heads/main.zip"
