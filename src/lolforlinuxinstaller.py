@@ -57,7 +57,7 @@ class Installer(QMainWindow):
             loadUi("installer.ui", self)
         except:
             loadUi("/usr/share/lol-for-linux-installer/installer.ui", self)
-        self.currentversion = "2.6.4"
+        self.currentversion = "2.6.5"
         self.aboutversiontext = f"Version: {self.currentversion}"
         self.versionlabelabout.setText(self.aboutversiontext)
         self.versionlabelabout.setAlignment(QtCore.Qt.AlignCenter)
