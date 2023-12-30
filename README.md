@@ -48,7 +48,7 @@ Check for it in the [DXVK Driver support wiki page](https://github.com/doitsujin
 
 ## Interface and options:
 ![Screenshot_20231230_161625](https://github.com/kassindornelles/lol-for-linux-installer/assets/40970965/7d437423-7515-4c20-9208-4d9c44f7e92d)
-![Screenshot_20231025_052342](https://github.com/kassindornelles/lol-for-linux-installer/assets/40970965/85af2e29-3258-4d88-b174-a52b9ef47cb7)
+![Screenshot_20231230_162211](https://github.com/kassindornelles/lol-for-linux-installer/assets/40970965/35668c6e-6c00-4457-a84d-bbe2447e5346)
 ![Screenshot_20231025_052345](https://github.com/kassindornelles/lol-for-linux-installer/assets/40970965/a79f7992-442a-41ed-8e22-a8bca3e736a5)
 
 ## FAQ:
