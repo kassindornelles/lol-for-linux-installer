@@ -10,6 +10,7 @@
     },
     "game_settings": {
         "Gamemode": "0",
-        "Skiplauncher": "0"
+        "Skiplauncher": "0",
+        "Hazerpc": "0"
     }
 }

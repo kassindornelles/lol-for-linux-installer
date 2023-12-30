@@ -6,6 +6,7 @@ import psutil
 import logging
 import json
 import urllib.request
+from urllib.request import urlretrieve, urlopen
 import shutil
 import zipfile
 import tarfile
@@ -66,6 +67,7 @@ class Installer(QMainWindow):
         self.gamemode_value = None
         self.richpresence_value = None
         self.skiplauncher_value = None
+        self.hazerpc_value = None
         self.setWindowTitle("lol-for-linux-installer")
         self.install_button.clicked.connect(self.installer_code)
         self.cancelButton.clicked.connect(self.cancel_installation)
@@ -88,6 +90,7 @@ class Installer(QMainWindow):
         self.vkbasaltcheckbox.clicked.connect(self.toggleapplybutton)
         self.donatebutton.clicked.connect(self.donatebuttonaction)
         self.skiplaunchercheck.clicked.connect(self.toggleapplybutton)
+        self.discordrpchaze.stateChanged.connect(self.toggleapplybutton)
         self.read_installed_folder()
         if self.winebuildcombobox.currentText != "...":
             self.winebuildcombobox.currentIndexChanged.connect(self.toggleapplybutton)
@@ -147,6 +150,16 @@ class Installer(QMainWindow):
             self.vkbasaltslider.setEnabled(False)
             self.vkbasaltslider.valueChanged.connect(self.vkbasaltslidercontrol)
 
+    def downloadrpcdiscordhaze(self, game_installed_folder):
+        os.chdir(self.game_installed_folder)
+        file_url = "https://raw.githubusercontent.com/Its-Haze/league-rpc-linux/master/league-rpc-auto-launcher.sh"
+        file_name = file_url.split("/")[-1]
+
+        with urlopen(file_url) as response:
+            with open(file_name, 'wb') as file:
+                file.write(response.read())
+            print(f"File downloaded to: {os.path.abspath(file_name)}")
+
     def load_env_vars(self, env_vars, installer):
         game_launcher_options = env_vars.get("game_launcher_options", {})
 
@@ -191,7 +204,10 @@ class Installer(QMainWindow):
             self.Usegamemode.setChecked(True)
         else:
             self.Usegamemode.setChecked(False)
-
+        if game_settings.get("Hazerpc") == "1":
+            self.discordrpchaze.setChecked(True)
+        else:
+            self.discordrpchaze.setChecked(False)
         if game_settings.get("Richpresence") == "1":
             self.Richpresence.setChecked(True)
         else:
@@ -223,6 +239,15 @@ class Installer(QMainWindow):
         return slider_value
 
     def toggleapplybutton(self):
+
+        sender_checkbox = self.sender()
+
+        # Uncheck the other checkbox
+        if sender_checkbox == self.Richpresence and sender_checkbox.isChecked():
+            self.discordrpchaze.setChecked(False)
+        elif sender_checkbox == self.discordrpchaze and sender_checkbox.isChecked():
+            self.Richpresence.setChecked(False)
+
         self.vkbasalt_slider_enablement()
         self.applyButton.setEnabled(True)
 
@@ -259,6 +284,12 @@ class Installer(QMainWindow):
 
         elif not self.Richpresence.isChecked() and os.path.isdir(self.game_rpc_folder):
             shutil.rmtree(self.game_rpc_folder)
+
+        if self.discordrpchaze.isChecked():
+            self.downloadrpcdiscordhaze(self.game_installed_folder)
+            env_vars["game_settings"]["Hazerpc"] = "1"
+        else:
+            env_vars["game_settings"]["Hazerpc"] = "0"
 
         if self.Usenvidiahybrid.isChecked():
             new_vars = {
@@ -491,6 +522,13 @@ class Installer(QMainWindow):
             print("Not using gamemode.")
 
         self.hide()
+
+        if self.discordrpchaze.isChecked():
+            try:
+                subprocess.run(["bash", "league-rpc-auto-launcher.sh"], check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Error running the script: {e}")
+
         process.wait()
 
         if not self.is_process_running("RiotClientServices.exe"):

@@ -123,7 +123,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="welcome">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -281,7 +281,7 @@
              <item>
               <widget class="QTabWidget" name="tabWidget">
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <property name="tabsClosable">
                 <bool>false</bool>
@@ -489,6 +489,35 @@
                      <property name="icon">
                       <iconset theme="media-playback-start">
                        <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_23">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Minimum</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>10</width>
+                       <height>10</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QCheckBox" name="discordrpchaze">
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable Discord Rich Presence, provided by Its-Haze&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/Its-Haze/league-rpc-linux&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;https://github.com/Its-Haze/league-rpc-linux&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                     <property name="text">
+                      <string>Discord RPC by Its-Haze</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="discord"/>
                      </property>
                     </widget>
                    </item>
