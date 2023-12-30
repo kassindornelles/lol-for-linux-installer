@@ -40,10 +40,11 @@ Check for it in the [DXVK Driver support wiki page](https://github.com/doitsujin
 
 
 ## Easy installation
-- Packages are made for Fedora, Ubuntu 22.04 LTS and Arch Linux, they are available in the [release page](https://github.com/kassindornelles/lol-for-linux-installer/releases)
+- Packages are made for Fedora, Ubuntu 22.04 LTS, Ubuntu 23.10 and Arch Linux, they are available in the [release page](https://github.com/kassindornelles/lol-for-linux-installer/releases)
+
+On Ubuntu 23.10 you need to enable i386 support by running `sudo dpkg --add-architecture i386`, `sudo apt update` and then install the .deb package (use gdebi if possible.)
 
 - If you want to build the packages yourself check the [Packaging repository](https://github.com/kassindornelles/lol-for-linux-installer-packages)
-
 
 
 ## Interface and options:
