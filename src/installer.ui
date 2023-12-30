@@ -425,42 +425,6 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QCheckBox" name="Richpresence">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable Discord Rich Presence, provided by league-rpc-linux&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/FeralInteractive/gamemode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/daglaroglou/league-rpc-linux&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Enable Discord Rich Presence [Experimental]</string>
-                     </property>
-                     <property name="icon">
-                      <iconset theme="discord">
-                       <normaloff>.</normaloff>.</iconset>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="verticalSpacer_16">
-                     <property name="orientation">
-                      <enum>Qt::Vertical</enum>
-                     </property>
-                     <property name="sizeType">
-                      <enum>QSizePolicy::Fixed</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>5</width>
-                       <height>10</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
                     <widget class="QCheckBox" name="skiplaunchercheck">
                      <property name="enabled">
                       <bool>true</bool>
@@ -509,15 +473,52 @@
                     </spacer>
                    </item>
                    <item>
+                    <widget class="QCheckBox" name="Richpresence">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable Discord Rich Presence, provided by league-rpc-linux&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Note: May not work with Discord Flatpak.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/FeralInteractive/gamemode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/daglaroglou/league-rpc-linux&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                     <property name="text">
+                      <string>Enable Discord Rich Presence by daglaroglou</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="discord">
+                       <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_16">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Fixed</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>5</width>
+                       <height>10</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
                     <widget class="QCheckBox" name="discordrpchaze">
                      <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable Discord Rich Presence, provided by Its-Haze&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/Its-Haze/league-rpc-linux&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;https://github.com/Its-Haze/league-rpc-linux&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable Discord Rich Presence, provided by Its-Haze&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Note: May not work with Discord Flatpak.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/Its-Haze/league-rpc-linux&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;https://github.com/Its-Haze/league-rpc-linux&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                      </property>
                      <property name="text">
                       <string>Discord RPC by Its-Haze</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="discord"/>
+                      <iconset theme="discord">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
