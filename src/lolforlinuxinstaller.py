@@ -91,6 +91,7 @@ class Installer(QMainWindow):
         self.donatebutton.clicked.connect(self.donatebuttonaction)
         self.skiplaunchercheck.clicked.connect(self.toggleapplybutton)
         self.discordrpchaze.stateChanged.connect(self.toggleapplybutton)
+        self.vkbasaltslider.valueChanged.connect(self.toggleapplybutton)
         self.read_installed_folder()
         if self.winebuildcombobox.currentText != "...":
             self.winebuildcombobox.currentIndexChanged.connect(self.toggleapplybutton)
@@ -145,10 +146,8 @@ class Installer(QMainWindow):
     def enablevkbasalt_settings(self):
         if self.vkbasaltcheckbox.isChecked():
             self.vkbasaltslider.setEnabled(True)
-            self.vkbasaltslider.valueChanged.connect(self.vkbasaltslidercontrol)
         else:
             self.vkbasaltslider.setEnabled(False)
-            self.vkbasaltslider.valueChanged.connect(self.vkbasaltslidercontrol)
 
     def downloadrpcdiscordhaze(self, game_installed_folder):
         os.chdir(self.game_installed_folder)
@@ -198,6 +197,7 @@ class Installer(QMainWindow):
             slider_value = self.convert_cas_sharpness_to_slider_value(casSharpness)
             self.vkbasaltcheckbox.setChecked(True)
             self.vkbasaltslider.setValue(slider_value)
+            self.applyButton.setEnabled(False)
 
         game_settings = env_vars.get("game_settings", {})
         if game_settings.get("Gamemode") == "1":
