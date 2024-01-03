@@ -92,6 +92,7 @@ class Installer(QMainWindow):
         self.skiplaunchercheck.clicked.connect(self.toggleapplybutton)
         self.discordrpchaze.stateChanged.connect(self.toggleapplybutton)
         self.vkbasaltslider.valueChanged.connect(self.toggleapplybutton)
+
         self.read_installed_folder()
         if self.winebuildcombobox.currentText != "...":
             self.winebuildcombobox.currentIndexChanged.connect(self.toggleapplybutton)
@@ -235,13 +236,12 @@ class Installer(QMainWindow):
 
     def convert_cas_sharpness_to_slider_value(self, casSharpness):
         slider_value = int((casSharpness - 0.1) / 0.9 * 9) + 1
-        self.sharpeningtext_level.setText(str(slider_value))
         return slider_value
 
     def toggleapplybutton(self):
-
+        value = self.vkbasaltslider.value()
+        self.sharpeningtext_level.setText("{}".format(value))
         sender_checkbox = self.sender()
-
         # Uncheck the other checkbox
         if sender_checkbox == self.Richpresence and sender_checkbox.isChecked():
             self.discordrpchaze.setChecked(False)
@@ -260,12 +260,6 @@ class Installer(QMainWindow):
     def donatebuttonaction(self):
         urlgit = QUrl("https://liberapay.com/kassindornelles/donate")
         QDesktopServices.openUrl(urlgit)
-
-    def vkbasaltslidercontrol(self, value):
-        self.sharpeningtext_level.setText(str(value))
-        if not self.slider_value_changed:
-            self.toggleapplybutton()
-        self.slider_value_changed = True
 
     def applynewsettings(self):
         os.chdir(self.game_installed_folder)
