@@ -1,5 +1,16 @@
 # lol-for-linux-installer
 
+### League of Legends is adding Vanguard Anti-Cheat
+League of Legends won't run on WINE anymore, it was a fun ride everyone
+
+Source: https://www.dexerto.com/league-of-legends/league-devs-finally-add-vanguard-anti-cheat-alongside-controversial-mmr-changes-2458788/
+
+
+
+
+
+
+
 League of Legends unofficial installer/manager for linux
 
 <b>This software is not affiliated with nor supported by Riot Games.</b>
